@@ -1,6 +1,18 @@
 name: custom composite actions
 on: [push, workflow_dispatch]
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+        - name: checkout code
+          uses: actions/checkout@v4.1.1
+        - name: Load & Cache Dependencies
+          uses: ./.github/actions/cached-dependencies
+          with:
+            caching: 'false'
+        - name: Lint Code
+          run: npm run lint          
+
   test:
     runs-on: ubuntu-latest
     steps:
