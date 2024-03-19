@@ -1,4 +1,4 @@
-name: CUSTOM COMPOSITE ACTIONS
+name: CUSTOM DOCKER ACTIONS
 on: [workflow_dispatch]
 jobs:
   lint:
