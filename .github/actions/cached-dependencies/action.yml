@@ -4,15 +4,14 @@ runs:
   using: 'composite'
   steps:
     - name: Caching dependencies
-          id: cache
-          uses: actions/cache@v4.0.1
-          with:
-            path: ~/.npm
-            key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}  
+        uses: actions/cache@v4.0.1
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}  
     - name: install NodeJS
-          uses: actions/setup-node@v4.0.2
-          with:
-           node-version: 18
+        uses: actions/setup-node@v4.0.2
+        with:
+         node-version: 18
     - name: install dependencies
-          run: npm ci
-          shell: bash #shell needs to be provided while using run
+        run: npm ci
+        shell: bash #shell needs to be provided while using run
