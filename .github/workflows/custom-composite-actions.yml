@@ -1,4 +1,4 @@
-name: Using for Reusable Workflows
+name: custom composite actions
 on: [push, workflow_dispatch]
 jobs:
   test:
@@ -46,22 +46,8 @@ jobs:
                 # package.json
                 
   deploy:
-    needs: build
-    uses: ./.github/workflows/reusable-workflows.yml
-    with:
-      artifact-name: dist-files-react
-  print-deploy-job:
-    needs: deploy
     runs-on: ubuntu-latest
     steps:
-      - name: print deploy putput
-        run: echo "${{ needs.deploy.outputs.result }}"
-  report:
-    needs: deploy
-    if: success()
-    runs-on: ubuntu-latest
-    steps:
-        - name: Output Information
-          run: |
-            echo "Something went wrong"
-            echo "${{ toJSON(github) }}"
+        - name: Deploy
+          run: echo "Artifact Deployed"
+  
