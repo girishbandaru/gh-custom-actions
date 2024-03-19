@@ -22,7 +22,7 @@ jobs:
           uses: ./.github/actions/cached-dependencies
         - name: Run tests
           id: run-tests
-          run: npm test          
+          run: npm run test          
         - name: Upload Test Report
           if: success() && steps.run-tests.outcome == 'successful'
           uses: actions/upload-artifact@v4.3.1
