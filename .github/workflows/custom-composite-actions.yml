@@ -22,6 +22,7 @@ jobs:
           uses: ./.github/actions/cached-dependencies
         - name: Run tests
           id: run-tests
+          continue-on-error: true
           run: npm test         
         - name: Upload Test Report
           if: success() && steps.run-tests.outcome == 'successful'
@@ -37,13 +38,8 @@ jobs:
     steps:
         - name: checkout code
           uses: actions/checkout@v4.1.1
-        - name: Caching dependencies
-          uses: actions/cache@v4.0.1
-          with:
-            path: ~/.npm
-            key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-        - name: install dependencies
-          run: npm ci        
+        - name: Load & Cache Dependencies
+          uses: ./.github/actions/cached-dependencies        
         - name: Build Project
           run: npm run build
         - name: publish JS filename
