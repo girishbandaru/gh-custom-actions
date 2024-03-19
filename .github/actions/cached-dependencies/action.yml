@@ -1,10 +1,14 @@
 name: 'Get & Cache Dependencies'
 description: 'Get the dependencies via npm and cache them.'
-# inputs:
-#   caching: #NAME IS OF OUR CHOICE
-#     description: 'Whether to cache dependencies or not.'
-#     required: false
-#     default: 'true'
+inputs:
+  caching: #NAME IS OF OUR CHOICE
+    description: 'Whether to cache dependencies or not.'
+    required: false
+    default: 'true'
+outputs:
+  used-cache:
+    description: 'Whether cache was used'
+    value: ${{ steps.install.outputs.cache }}
 runs:
   using: 'composite'
   steps:
@@ -20,6 +24,9 @@ runs:
       with:
          node-version: 18
     - name: install dependencies
+      id: install
       if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
-      run: npm ci
+      run: |
+        npm ci
+        echo "cache=${{ inputs.caching }}" >> $GITHUB_OUTPUT
       shell: bash #shell needs to be provided while using run
